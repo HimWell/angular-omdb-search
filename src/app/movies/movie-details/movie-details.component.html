@@ -1,0 +1,66 @@
+<!-- take note I used ? as safe navigation operators as some results return null -->
+
+<div class="loading-indicator" *ngIf="isLoading$ | async">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+</div>
+
+<!-- selected movie details display -->
+<ng-container *ngIf="(selectedMovie$ | async) as selectedMovie">
+
+    <div class="content">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around" fxLayoutGap="15px grid">
+            <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%">
+
+                <mat-card>
+
+                    <mat-card-header>
+                        <mat-card-title style="color: fuchsia;">{{selectedMovie?.Title}}</mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content style="padding-top: 30px;">
+
+                        <img *ngIf="selectedMovie?.Poster !== 'N/A'" mat-card-image src="{{selectedMovie?.Poster}}">
+                        <!-- if no poster -->
+                        <img *ngIf="selectedMovie?.Poster === 'N/A'" mat-card-imag src="../../../assets/img/preview.png">
+
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">auto_stories</mat-icon><span style="color: goldenrod;">Plot:</span> {{selectedMovie?.Plot}}</h3>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">recent_actors</mat-icon><span style="color: goldenrod;">Actor(s):</span> {{selectedMovie?.Actors}}</h3>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">security</mat-icon><span style="color: goldenrod;">Age Restriction:</span> {{selectedMovie?.Rated}}</h3>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">featured_play_list</mat-icon><span style="color: goldenrod;">Genre(s):</span> {{selectedMovie?.Genre}}</h3>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">calendar_today</mat-icon><span style="color: goldenrod;">Release Date:</span> {{selectedMovie?.Released}}</h3>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">access_time</mat-icon><span style="color: goldenrod;">Runtime:</span> {{selectedMovie?.Runtime}}</h3>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">movie_creation</mat-icon><span style="color: goldenrod;">Director(s):</span> {{selectedMovie?.Director}}</h3>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">reviews</mat-icon><span style="color: goldenrod;">imdb Rating:</span> {{selectedMovie?.imdbRating}}</h3>
+                        <mat-chip-list>
+                            <mat-icon class="material-icons other-rating">reviews</mat-icon>
+                            <h3 style="color: goldenrod;">Website Rating(s):</h3>
+                            <mat-chip style="background-color: green; color: white;" *ngFor="let rating of selectedMovie?.Ratings">{{rating?.Source}}: {{rating?.Value}}</mat-chip>
+                        </mat-chip-list>
+                        <h3 style="padding-top: 15px;">
+                            <mat-icon class="material-icons v-align-middle">attach_money</mat-icon><span style="color: goldenrod;">Box Office Earnings:</span> {{selectedMovie?.BoxOffice}}</h3>
+
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                        <button mat-raised-button color="warn" (click)="navigateToMovieSearch()">Back to Movie Search
+        <mat-icon class="example-icon">arrow_back</mat-icon>
+      </button>
+                    </mat-card-actions>
+
+                </mat-card>
+
+            </div>
+        </div>
+    </div>
+
+</ng-container>
+
+<br>

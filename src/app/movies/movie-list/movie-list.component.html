@@ -1,0 +1,91 @@
+<!-- take note I used ? as safe navigation operators as some results return null -->
+
+<div class="loading-indicator" *ngIf="isLoading$ | async">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+</div>
+
+<h1 style="text-align: center; padding-top: 15px; color:crimson">Search for a OMDb Movie</h1>
+
+<!-- search form -->
+<div class="search">
+
+    <form #f="ngForm" ngNativeValidate>
+
+        <div>
+            <div>
+                <mat-form-field appearance="outline" style="margin-right: 10px;">
+                    <mat-label>Search Movie</mat-label>
+                    <input matInput placeholder="Search Movie" id="searchQuery" name="searchQuery" [(ngModel)]="searchQuery">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <button [disabled]="!f.valid" mat-raised-button color="primary" (click)="queryMovies()">Search
+      <mat-icon class="example-icon">help</mat-icon>
+    </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<ng-container *ngIf="movieList?.Response === 'False'">
+
+    <div class="content">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around" fxLayoutGap="15px grid">
+            <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="33%">
+
+                <mat-card>
+
+                    <mat-card-header>
+                        <mat-card-title style="color: red;">Sorry...No Movies Available</mat-card-title>
+                    </mat-card-header>
+
+                    <img src="../../../assets/img/nothing-found.png" mat-card-image>
+
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+</ng-container>
+
+<!-- movie list display -->
+<ng-container *ngIf="movieList?.Response === 'True'">
+
+    <div class="content">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around" fxLayoutGap="15px grid">
+            <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let movie of movieList?.Search">
+
+                <mat-card>
+
+                    <mat-card-header>
+                        <mat-card-title style="color: fuchsia;">{{movie?.Title}}</mat-card-title>
+                    </mat-card-header>
+
+                    <img *ngIf="movie?.Poster !== 'N/A'" mat-card-image src="{{movie?.Poster}}">
+
+                    <img *ngIf="movie?.Poster === 'N/A'" mat-card-image src="../../../assets/img/preview.png">
+
+                    <mat-card-content>
+                        <h3>
+                            <mat-icon class="material-icons v-align-middle">calendar_today</mat-icon><span style="color: goldenrod;">Release Date:</span> {{movie?.Year}}</h3>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+
+                        <button mat-raised-button color="accent" (click)="navigateToMovieDetails(movie?.imdbID)">Movie Details
+        <mat-icon class="example-icon">info</mat-icon>
+      </button>
+                    </mat-card-actions>
+
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <mat-paginator #paginator (page)="queryMovies($event)" [length]="movieList?.totalResults" [pageSize]="pageSize"> </mat-paginator>
+
+</ng-container>
+
+<br>

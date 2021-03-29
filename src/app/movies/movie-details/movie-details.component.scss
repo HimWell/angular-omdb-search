@@ -1,0 +1,74 @@
+.loading-indicator {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.loading-indicator:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // background-color: rgba(0,0,0,0.3);
+}
+
+// .mat-card {
+//     width: 70%;
+//     height: 60%;
+//     box-sizing: border-box;
+// }
+.content {
+    padding: 15px;
+    padding-top: 40px;
+}
+
+mat-card {
+    width: 450px;
+    text-align: center;
+    justify-content: center;
+}
+
+.size {
+    padding-left: 30px;
+    width: 370px;
+}
+
+.form_cont {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.v-align-middle {
+    vertical-align: middle;
+    padding-right: 5px;
+    margin-bottom: 2px;
+}
+
+.other-rating {
+    vertical-align: middle;
+    padding-right: 5px;
+    margin-bottom: 18px;
+    margin-left: 5px;
+}
+
+::ng-deep snack-bar-container.background-success {
+    background: green !important;
+    color: white !important;
+}
+
+::ng-deep snack-bar-container.background-err {
+    background: red !important;
+    color: white !important;
+}
